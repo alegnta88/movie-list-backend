@@ -36,3 +36,21 @@ model Movie {
   @@map("movies")
   @@index([createdBy])
 }
+
+model MovieWatchlist {
+  id        String   @id @default(uuid())
+  userId    String
+  movieId   String
+  addedAt   DateTime @default(now())
+  watched   Boolean  @default(false)
+  rating    Int?     
+  notes     String?
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  movie     Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, movieId]) 
+  @@map("movie_watchlist")
+  @@index([userId])
+  @@index([movieId])
+}
