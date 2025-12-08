@@ -4,11 +4,6 @@ import { connectDB } from './config/db.js';
 
 import 'dotenv/config';
 
-console.log('Environment check:');
-console.log('DATABASE_URL exists:', !!process.env.DATABASE_URL);
-console.log('DATABASE_URL preview:', process.env.DATABASE_URL?.substring(0, 20) + '...');
-console.log('PORT:', process.env.PORT);
-
 dotenv.config();
 connectDB();
 
