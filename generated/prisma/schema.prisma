@@ -15,7 +15,8 @@ model User {
   password  String
   createdAt DateTime @default(now())
 
-  movies Movie[]
+  movies          Movie[]
+  movieWatchlists MovieWatchlist[] // Add this line
 
   @@map("users")
 }
@@ -31,8 +32,27 @@ model Movie {
   createdBy   String
   createdAt   DateTime @default(now())
 
-  user User @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  user            User             @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  movieWatchlists MovieWatchlist[]
 
   @@index([createdBy])
   @@map("movies")
+}
+
+model MovieWatchlist {
+  id      String   @id @default(uuid())
+  userId  String
+  movieId String
+  addedAt DateTime @default(now())
+  watched Boolean  @default(false)
+  rating  Int?
+  notes   String?
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, movieId])
+  @@index([userId])
+  @@index([movieId])
+  @@map("movie_watchlist")
 }

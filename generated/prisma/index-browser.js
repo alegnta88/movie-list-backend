@@ -141,6 +141,16 @@ exports.Prisma.MovieScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.MovieWatchlistScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  movieId: 'movieId',
+  addedAt: 'addedAt',
+  watched: 'watched',
+  rating: 'rating',
+  notes: 'notes'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -159,7 +169,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Movie: 'Movie'
+  Movie: 'Movie',
+  MovieWatchlist: 'MovieWatchlist'
 };
 
 /**

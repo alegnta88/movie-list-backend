@@ -113,6 +113,16 @@ exports.Prisma.MovieScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.MovieWatchlistScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  movieId: 'movieId',
+  addedAt: 'addedAt',
+  watched: 'watched',
+  rating: 'rating',
+  notes: 'notes'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -131,7 +141,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Movie: 'Movie'
+  Movie: 'Movie',
+  MovieWatchlist: 'MovieWatchlist'
 };
 /**
  * Create the Client
@@ -172,6 +183,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -180,13 +192,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  output   = \"../generated/prisma\"\n  provider = \"prisma-client-js\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  name      String\n  email     String   @unique\n  password  String\n  createdAt DateTime @default(now())\n\n  movies Movie[]\n\n  @@map(\"users\")\n}\n\nmodel Movie {\n  id          String   @id @default(uuid())\n  title       String\n  overview    String?\n  releaseYear Int?\n  genre       String?\n  runtime     Int?\n  posterUrl   String?\n  createdBy   String\n  createdAt   DateTime @default(now())\n\n  user User @relation(fields: [createdBy], references: [id], onDelete: Cascade)\n\n  @@index([createdBy])\n  @@map(\"movies\")\n}\n",
-  "inlineSchemaHash": "34287d88626f85ebe6547a086309225643d0c412adbe2fbbdc899c81ec67d1a2",
+  "inlineSchema": "generator client {\n  output   = \"../generated/prisma\"\n  provider = \"prisma-client-js\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  name      String\n  email     String   @unique\n  password  String\n  createdAt DateTime @default(now())\n\n  movies          Movie[]\n  movieWatchlists MovieWatchlist[] // Add this line\n\n  @@map(\"users\")\n}\n\nmodel Movie {\n  id          String   @id @default(uuid())\n  title       String\n  overview    String?\n  releaseYear Int?\n  genre       String?\n  runtime     Int?\n  posterUrl   String?\n  createdBy   String\n  createdAt   DateTime @default(now())\n\n  user            User             @relation(fields: [createdBy], references: [id], onDelete: Cascade)\n  movieWatchlists MovieWatchlist[]\n\n  @@index([createdBy])\n  @@map(\"movies\")\n}\n\nmodel MovieWatchlist {\n  id      String   @id @default(uuid())\n  userId  String\n  movieId String\n  addedAt DateTime @default(now())\n  watched Boolean  @default(false)\n  rating  Int?\n  notes   String?\n\n  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)\n  movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)\n\n  @@unique([userId, movieId])\n  @@index([userId])\n  @@index([movieId])\n  @@map(\"movie_watchlist\")\n}\n",
+  "inlineSchemaHash": "18719467707bbde2dde7225565e0a8db66268a44435190fc165ace043fba8e1a",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"movies\",\"kind\":\"object\",\"type\":\"Movie\",\"relationName\":\"MovieToUser\"}],\"dbName\":\"users\"},\"Movie\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"overview\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"releaseYear\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"genre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"runtime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"posterUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MovieToUser\"}],\"dbName\":\"movies\"}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"movies\",\"kind\":\"object\",\"type\":\"Movie\",\"relationName\":\"MovieToUser\"},{\"name\":\"movieWatchlists\",\"kind\":\"object\",\"type\":\"MovieWatchlist\",\"relationName\":\"MovieWatchlistToUser\"}],\"dbName\":\"users\"},\"Movie\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"overview\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"releaseYear\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"genre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"runtime\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"posterUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MovieToUser\"},{\"name\":\"movieWatchlists\",\"kind\":\"object\",\"type\":\"MovieWatchlist\",\"relationName\":\"MovieToMovieWatchlist\"}],\"dbName\":\"movies\"},\"MovieWatchlist\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"movieId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"addedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"watched\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"rating\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"notes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"MovieWatchlistToUser\"},{\"name\":\"movie\",\"kind\":\"object\",\"type\":\"Movie\",\"relationName\":\"MovieToMovieWatchlist\"}],\"dbName\":\"movie_watchlist\"}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),
