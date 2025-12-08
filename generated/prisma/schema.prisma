@@ -14,4 +14,25 @@ model User {
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
+
+  movies Movie[]
+
+  @@map("users")
+}
+
+model Movie {
+  id          String   @id @default(uuid())
+  title       String
+  overview    String?
+  releaseYear Int?
+  genre       String?
+  runtime     Int?
+  posterUrl   String?
+  createdBy   String
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+
+  @@index([createdBy])
+  @@map("movies")
 }

@@ -5,13 +5,34 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id String @id @default (uuid())
-  name String
-  email String @unique
-  password String
-  createdAt DateTime @default (now())
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  
+  movies    Movie[]
+  
+  @@map("users")
+}
+
+model Movie {
+  id          String   @id @default(uuid())
+  title       String
+  overview    String?
+  releaseYear Int?
+  genre       String?
+  runtime     Int?
+  posterUrl   String?
+  createdBy   String
+  createdAt   DateTime @default(now())
+  
+  user        User     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  
+  @@map("movies")
+  @@index([createdBy])
 }
