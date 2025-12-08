@@ -30,6 +30,25 @@ export type Movie = $Result.DefaultSelection<Prisma.$MoviePayload>
 export type MovieWatchlist = $Result.DefaultSelection<Prisma.$MovieWatchlistPayload>
 
 /**
+ * Enums
+ */
+export namespace $Enums {
+  export const WatchlistStatus: {
+  PLANNED: 'PLANNED',
+  WATCHING: 'WATCHING',
+  COMPLETED: 'COMPLETED',
+  DROPPED: 'DROPPED'
+};
+
+export type WatchlistStatus = (typeof WatchlistStatus)[keyof typeof WatchlistStatus]
+
+}
+
+export type WatchlistStatus = $Enums.WatchlistStatus
+
+export const WatchlistStatus: typeof $Enums.WatchlistStatus
+
+/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
@@ -3413,6 +3432,7 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     movieId: string | null
+    status: $Enums.WatchlistStatus | null
     addedAt: Date | null
     watched: boolean | null
     rating: number | null
@@ -3423,6 +3443,7 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     movieId: string | null
+    status: $Enums.WatchlistStatus | null
     addedAt: Date | null
     watched: boolean | null
     rating: number | null
@@ -3433,6 +3454,7 @@ export namespace Prisma {
     id: number
     userId: number
     movieId: number
+    status: number
     addedAt: number
     watched: number
     rating: number
@@ -3453,6 +3475,7 @@ export namespace Prisma {
     id?: true
     userId?: true
     movieId?: true
+    status?: true
     addedAt?: true
     watched?: true
     rating?: true
@@ -3463,6 +3486,7 @@ export namespace Prisma {
     id?: true
     userId?: true
     movieId?: true
+    status?: true
     addedAt?: true
     watched?: true
     rating?: true
@@ -3473,6 +3497,7 @@ export namespace Prisma {
     id?: true
     userId?: true
     movieId?: true
+    status?: true
     addedAt?: true
     watched?: true
     rating?: true
@@ -3570,6 +3595,7 @@ export namespace Prisma {
     id: string
     userId: string
     movieId: string
+    status: $Enums.WatchlistStatus
     addedAt: Date
     watched: boolean
     rating: number | null
@@ -3599,6 +3625,7 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     movieId?: boolean
+    status?: boolean
     addedAt?: boolean
     watched?: boolean
     rating?: boolean
@@ -3611,6 +3638,7 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     movieId?: boolean
+    status?: boolean
     addedAt?: boolean
     watched?: boolean
     rating?: boolean
@@ -3623,6 +3651,7 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     movieId?: boolean
+    status?: boolean
     addedAt?: boolean
     watched?: boolean
     rating?: boolean
@@ -3635,13 +3664,14 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     movieId?: boolean
+    status?: boolean
     addedAt?: boolean
     watched?: boolean
     rating?: boolean
     notes?: boolean
   }
 
-  export type MovieWatchlistOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "movieId" | "addedAt" | "watched" | "rating" | "notes", ExtArgs["result"]["movieWatchlist"]>
+  export type MovieWatchlistOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "movieId" | "status" | "addedAt" | "watched" | "rating" | "notes", ExtArgs["result"]["movieWatchlist"]>
   export type MovieWatchlistInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     movie?: boolean | MovieDefaultArgs<ExtArgs>
@@ -3665,6 +3695,7 @@ export namespace Prisma {
       id: string
       userId: string
       movieId: string
+      status: $Enums.WatchlistStatus
       addedAt: Date
       watched: boolean
       rating: number | null
@@ -4097,6 +4128,7 @@ export namespace Prisma {
     readonly id: FieldRef<"MovieWatchlist", 'String'>
     readonly userId: FieldRef<"MovieWatchlist", 'String'>
     readonly movieId: FieldRef<"MovieWatchlist", 'String'>
+    readonly status: FieldRef<"MovieWatchlist", 'WatchlistStatus'>
     readonly addedAt: FieldRef<"MovieWatchlist", 'DateTime'>
     readonly watched: FieldRef<"MovieWatchlist", 'Boolean'>
     readonly rating: FieldRef<"MovieWatchlist", 'Int'>
@@ -4559,6 +4591,7 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     movieId: 'movieId',
+    status: 'status',
     addedAt: 'addedAt',
     watched: 'watched',
     rating: 'rating',
@@ -4636,6 +4669,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'WatchlistStatus'
+   */
+  export type EnumWatchlistStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WatchlistStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'WatchlistStatus[]'
+   */
+  export type ListEnumWatchlistStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WatchlistStatus[]'>
     
 
 
@@ -4808,6 +4855,7 @@ export namespace Prisma {
     id?: StringFilter<"MovieWatchlist"> | string
     userId?: StringFilter<"MovieWatchlist"> | string
     movieId?: StringFilter<"MovieWatchlist"> | string
+    status?: EnumWatchlistStatusFilter<"MovieWatchlist"> | $Enums.WatchlistStatus
     addedAt?: DateTimeFilter<"MovieWatchlist"> | Date | string
     watched?: BoolFilter<"MovieWatchlist"> | boolean
     rating?: IntNullableFilter<"MovieWatchlist"> | number | null
@@ -4820,6 +4868,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     movieId?: SortOrder
+    status?: SortOrder
     addedAt?: SortOrder
     watched?: SortOrder
     rating?: SortOrderInput | SortOrder
@@ -4836,6 +4885,7 @@ export namespace Prisma {
     NOT?: MovieWatchlistWhereInput | MovieWatchlistWhereInput[]
     userId?: StringFilter<"MovieWatchlist"> | string
     movieId?: StringFilter<"MovieWatchlist"> | string
+    status?: EnumWatchlistStatusFilter<"MovieWatchlist"> | $Enums.WatchlistStatus
     addedAt?: DateTimeFilter<"MovieWatchlist"> | Date | string
     watched?: BoolFilter<"MovieWatchlist"> | boolean
     rating?: IntNullableFilter<"MovieWatchlist"> | number | null
@@ -4848,6 +4898,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     movieId?: SortOrder
+    status?: SortOrder
     addedAt?: SortOrder
     watched?: SortOrder
     rating?: SortOrderInput | SortOrder
@@ -4866,6 +4917,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"MovieWatchlist"> | string
     userId?: StringWithAggregatesFilter<"MovieWatchlist"> | string
     movieId?: StringWithAggregatesFilter<"MovieWatchlist"> | string
+    status?: EnumWatchlistStatusWithAggregatesFilter<"MovieWatchlist"> | $Enums.WatchlistStatus
     addedAt?: DateTimeWithAggregatesFilter<"MovieWatchlist"> | Date | string
     watched?: BoolWithAggregatesFilter<"MovieWatchlist"> | boolean
     rating?: IntNullableWithAggregatesFilter<"MovieWatchlist"> | number | null
@@ -5025,6 +5077,7 @@ export namespace Prisma {
 
   export type MovieWatchlistCreateInput = {
     id?: string
+    status?: $Enums.WatchlistStatus
     addedAt?: Date | string
     watched?: boolean
     rating?: number | null
@@ -5037,6 +5090,7 @@ export namespace Prisma {
     id?: string
     userId: string
     movieId: string
+    status?: $Enums.WatchlistStatus
     addedAt?: Date | string
     watched?: boolean
     rating?: number | null
@@ -5045,6 +5099,7 @@ export namespace Prisma {
 
   export type MovieWatchlistUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumWatchlistStatusFieldUpdateOperationsInput | $Enums.WatchlistStatus
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watched?: BoolFieldUpdateOperationsInput | boolean
     rating?: NullableIntFieldUpdateOperationsInput | number | null
@@ -5057,6 +5112,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     movieId?: StringFieldUpdateOperationsInput | string
+    status?: EnumWatchlistStatusFieldUpdateOperationsInput | $Enums.WatchlistStatus
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watched?: BoolFieldUpdateOperationsInput | boolean
     rating?: NullableIntFieldUpdateOperationsInput | number | null
@@ -5067,6 +5123,7 @@ export namespace Prisma {
     id?: string
     userId: string
     movieId: string
+    status?: $Enums.WatchlistStatus
     addedAt?: Date | string
     watched?: boolean
     rating?: number | null
@@ -5075,6 +5132,7 @@ export namespace Prisma {
 
   export type MovieWatchlistUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumWatchlistStatusFieldUpdateOperationsInput | $Enums.WatchlistStatus
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watched?: BoolFieldUpdateOperationsInput | boolean
     rating?: NullableIntFieldUpdateOperationsInput | number | null
@@ -5085,6 +5143,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     movieId?: StringFieldUpdateOperationsInput | string
+    status?: EnumWatchlistStatusFieldUpdateOperationsInput | $Enums.WatchlistStatus
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watched?: BoolFieldUpdateOperationsInput | boolean
     rating?: NullableIntFieldUpdateOperationsInput | number | null
@@ -5309,6 +5368,13 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type EnumWatchlistStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.WatchlistStatus | EnumWatchlistStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.WatchlistStatus[] | ListEnumWatchlistStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WatchlistStatus[] | ListEnumWatchlistStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumWatchlistStatusFilter<$PrismaModel> | $Enums.WatchlistStatus
+  }
+
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -5328,6 +5394,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     movieId?: SortOrder
+    status?: SortOrder
     addedAt?: SortOrder
     watched?: SortOrder
     rating?: SortOrder
@@ -5342,6 +5409,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     movieId?: SortOrder
+    status?: SortOrder
     addedAt?: SortOrder
     watched?: SortOrder
     rating?: SortOrder
@@ -5352,6 +5420,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     movieId?: SortOrder
+    status?: SortOrder
     addedAt?: SortOrder
     watched?: SortOrder
     rating?: SortOrder
@@ -5360,6 +5429,16 @@ export namespace Prisma {
 
   export type MovieWatchlistSumOrderByAggregateInput = {
     rating?: SortOrder
+  }
+
+  export type EnumWatchlistStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WatchlistStatus | EnumWatchlistStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.WatchlistStatus[] | ListEnumWatchlistStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WatchlistStatus[] | ListEnumWatchlistStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumWatchlistStatusWithAggregatesFilter<$PrismaModel> | $Enums.WatchlistStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWatchlistStatusFilter<$PrismaModel>
+    _max?: NestedEnumWatchlistStatusFilter<$PrismaModel>
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -5542,6 +5621,10 @@ export namespace Prisma {
     connect?: MovieWhereUniqueInput
   }
 
+  export type EnumWatchlistStatusFieldUpdateOperationsInput = {
+    set?: $Enums.WatchlistStatus
+  }
+
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
   }
@@ -5698,9 +5781,26 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedEnumWatchlistStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.WatchlistStatus | EnumWatchlistStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.WatchlistStatus[] | ListEnumWatchlistStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WatchlistStatus[] | ListEnumWatchlistStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumWatchlistStatusFilter<$PrismaModel> | $Enums.WatchlistStatus
+  }
+
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedEnumWatchlistStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WatchlistStatus | EnumWatchlistStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.WatchlistStatus[] | ListEnumWatchlistStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WatchlistStatus[] | ListEnumWatchlistStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumWatchlistStatusWithAggregatesFilter<$PrismaModel> | $Enums.WatchlistStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWatchlistStatusFilter<$PrismaModel>
+    _max?: NestedEnumWatchlistStatusFilter<$PrismaModel>
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -5747,6 +5847,7 @@ export namespace Prisma {
 
   export type MovieWatchlistCreateWithoutUserInput = {
     id?: string
+    status?: $Enums.WatchlistStatus
     addedAt?: Date | string
     watched?: boolean
     rating?: number | null
@@ -5757,6 +5858,7 @@ export namespace Prisma {
   export type MovieWatchlistUncheckedCreateWithoutUserInput = {
     id?: string
     movieId: string
+    status?: $Enums.WatchlistStatus
     addedAt?: Date | string
     watched?: boolean
     rating?: number | null
@@ -5827,6 +5929,7 @@ export namespace Prisma {
     id?: StringFilter<"MovieWatchlist"> | string
     userId?: StringFilter<"MovieWatchlist"> | string
     movieId?: StringFilter<"MovieWatchlist"> | string
+    status?: EnumWatchlistStatusFilter<"MovieWatchlist"> | $Enums.WatchlistStatus
     addedAt?: DateTimeFilter<"MovieWatchlist"> | Date | string
     watched?: BoolFilter<"MovieWatchlist"> | boolean
     rating?: IntNullableFilter<"MovieWatchlist"> | number | null
@@ -5858,6 +5961,7 @@ export namespace Prisma {
 
   export type MovieWatchlistCreateWithoutMovieInput = {
     id?: string
+    status?: $Enums.WatchlistStatus
     addedAt?: Date | string
     watched?: boolean
     rating?: number | null
@@ -5868,6 +5972,7 @@ export namespace Prisma {
   export type MovieWatchlistUncheckedCreateWithoutMovieInput = {
     id?: string
     userId: string
+    status?: $Enums.WatchlistStatus
     addedAt?: Date | string
     watched?: boolean
     rating?: number | null
@@ -6059,6 +6164,7 @@ export namespace Prisma {
   export type MovieWatchlistCreateManyUserInput = {
     id?: string
     movieId: string
+    status?: $Enums.WatchlistStatus
     addedAt?: Date | string
     watched?: boolean
     rating?: number | null
@@ -6102,6 +6208,7 @@ export namespace Prisma {
 
   export type MovieWatchlistUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumWatchlistStatusFieldUpdateOperationsInput | $Enums.WatchlistStatus
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watched?: BoolFieldUpdateOperationsInput | boolean
     rating?: NullableIntFieldUpdateOperationsInput | number | null
@@ -6112,6 +6219,7 @@ export namespace Prisma {
   export type MovieWatchlistUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     movieId?: StringFieldUpdateOperationsInput | string
+    status?: EnumWatchlistStatusFieldUpdateOperationsInput | $Enums.WatchlistStatus
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watched?: BoolFieldUpdateOperationsInput | boolean
     rating?: NullableIntFieldUpdateOperationsInput | number | null
@@ -6121,6 +6229,7 @@ export namespace Prisma {
   export type MovieWatchlistUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     movieId?: StringFieldUpdateOperationsInput | string
+    status?: EnumWatchlistStatusFieldUpdateOperationsInput | $Enums.WatchlistStatus
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watched?: BoolFieldUpdateOperationsInput | boolean
     rating?: NullableIntFieldUpdateOperationsInput | number | null
@@ -6130,6 +6239,7 @@ export namespace Prisma {
   export type MovieWatchlistCreateManyMovieInput = {
     id?: string
     userId: string
+    status?: $Enums.WatchlistStatus
     addedAt?: Date | string
     watched?: boolean
     rating?: number | null
@@ -6138,6 +6248,7 @@ export namespace Prisma {
 
   export type MovieWatchlistUpdateWithoutMovieInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumWatchlistStatusFieldUpdateOperationsInput | $Enums.WatchlistStatus
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watched?: BoolFieldUpdateOperationsInput | boolean
     rating?: NullableIntFieldUpdateOperationsInput | number | null
@@ -6148,6 +6259,7 @@ export namespace Prisma {
   export type MovieWatchlistUncheckedUpdateWithoutMovieInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    status?: EnumWatchlistStatusFieldUpdateOperationsInput | $Enums.WatchlistStatus
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watched?: BoolFieldUpdateOperationsInput | boolean
     rating?: NullableIntFieldUpdateOperationsInput | number | null
@@ -6157,6 +6269,7 @@ export namespace Prisma {
   export type MovieWatchlistUncheckedUpdateManyWithoutMovieInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    status?: EnumWatchlistStatusFieldUpdateOperationsInput | $Enums.WatchlistStatus
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     watched?: BoolFieldUpdateOperationsInput | boolean
     rating?: NullableIntFieldUpdateOperationsInput | number | null

@@ -145,6 +145,7 @@ exports.Prisma.MovieWatchlistScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   movieId: 'movieId',
+  status: 'status',
   addedAt: 'addedAt',
   watched: 'watched',
   rating: 'rating',
@@ -165,7 +166,12 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.WatchlistStatus = exports.$Enums.WatchlistStatus = {
+  PLANNED: 'PLANNED',
+  WATCHING: 'WATCHING',
+  COMPLETED: 'COMPLETED',
+  DROPPED: 'DROPPED'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',

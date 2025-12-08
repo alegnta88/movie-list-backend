@@ -43,6 +43,7 @@ model MovieWatchlist {
   id        String   @id @default(uuid())
   userId    String
   movieId   String
+  status    WatchlistStatus @default(PLANNED)
   addedAt   DateTime @default(now())
   watched   Boolean  @default(false)
   rating    Int?     
@@ -55,4 +56,11 @@ model MovieWatchlist {
   @@map("movie_watchlist")
   @@index([userId])
   @@index([movieId])
+}
+
+enum WatchlistStatus {
+  PLANNED
+  WATCHING
+  COMPLETED
+  DROPPED
 }
