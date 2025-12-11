@@ -1,13 +1,14 @@
 import { PrismaClient } from '../generated/prisma/index.js';
-
 import 'dotenv/config';
 
 const prismaClient = new PrismaClient({
     log:
-    process.env.NODE_ENV=== 'development'
-        ? ['query', 'info', 'warn', 'error']
-        : ['warn', 'error']
+        process.env.NODE_ENV === 'development'
+            ? ['query', 'info', 'warn', 'error']
+            : ['warn', 'error']
 });
+
+export default prismaClient;
 
 export const connectDB = async () => {
     try {
