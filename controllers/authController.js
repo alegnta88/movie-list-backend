@@ -2,7 +2,7 @@ import prismaClient from '../config/db.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-export const register = async (req, res) => {
+export const userRegister = async (req, res) => {
     const { name, email, password } = req.body;
 
     const existingUser = await prismaClient.user.findUnique({
@@ -32,7 +32,7 @@ export const register = async (req, res) => {
     res.status(200).json({ message: 'User registered successfully', user: selectedUserData });
 }
 
-export const login = async (req, res) => {
+export const userLogin = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await prismaClient.user.findUnique({
@@ -51,4 +51,20 @@ export const login = async (req, res) => {
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     res.status(200).json({ message: 'Login successful', token });
+};
+
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await prismaClient.user.findMany({
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                createdAt: true
+            }
+        });
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch users' });
+    }
 };
