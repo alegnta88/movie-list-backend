@@ -75,3 +75,12 @@ export const getAllUsers = async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch users' });
     }
 };
+
+export const userLogout = (req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: process.env.NODE_ENV === "production"
+    });
+    res.status(200).json({ message: "Logout successful" });
+};
