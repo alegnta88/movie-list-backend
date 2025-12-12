@@ -48,7 +48,7 @@ export const userLogin = async (req, res) => {
         return res.status(400).json({ error: 'Invalid email or password' });
     }
 
-    const token = generateToken(user.id);
+    const token = generateToken(user.id, res);
 
     const selectedUserData = {
         id: user.id,
