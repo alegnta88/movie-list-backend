@@ -35,4 +35,4 @@ const newMovie = await prismaClient.movie.create({
     } catch (error) {
         res.status(500).json({ error: 'Failed to add movie' });
     }   
-}
+};
