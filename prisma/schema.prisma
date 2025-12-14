@@ -16,7 +16,7 @@ model User {
   createdAt DateTime @default(now())
   
   movies           Movie[]
-  movieWatchlists  MovieWatchlist[]  // Add this line
+  movieWatchlists  MovieWatchlist[] 
   
   @@map("users")
 }

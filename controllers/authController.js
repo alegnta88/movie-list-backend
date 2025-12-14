@@ -30,7 +30,7 @@ export const userRegister = async (req, res) => {
         createdAt: newUser.createdAt
     };
     res.status(201).json({ message: 'User registered successfully', user: selectedUserData });
-}
+};
 
 export const userLogin = async (req, res) => {
     const { email, password } = req.body;
