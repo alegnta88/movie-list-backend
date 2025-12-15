@@ -47,3 +47,46 @@ export const addToWatchlist = async (req, res) => {
         res.status(500).json({ error: 'Failed to add movie to watchlist' });
     }
 };
+
+export const removeFromWatchlist = async (req, res) => {
+
+    try {
+
+        const watchlist = await prisma.movieWatchlist.findUnique({
+            where: { id: req.params.id }
+        });
+
+        if (!watchlist) {
+            return res.status(404).json({ error: 'Watchlist entry not found' });
+        }
+
+        if (watchlist.userId !== req.user.userId) {
+            return res.status(403).json({ error: 'Unauthorized to delete this entry' });
+        }
+
+        const deletedEntry = await prisma.movieWatchlist.delete({
+            where: { id: req.params.id }
+        });
+
+        res.status(200).json({ message: 'Movie removed from watchlist', deletedEntry });
+    }
+    catch (error) {
+        console.error('Error removing from watchlist:', error);
+        res.status(500).json({ error: 'Failed to remove movie from watchlist' });
+    }
+};
+
+export const getUserWatchlist = async (req, res) => {
+    const userId = req.user.userId;
+
+    try {
+        const watchlist = await prisma.movieWatchlist.findMany({
+            where: { userId: userId },
+        });
+
+        res.status(200).json({ watchlist });
+    } catch (error) {
+        console.error('Error fetching watchlist:', error);
+        res.status(500).json({ error: 'Failed to fetch watchlist' });
+    }
+};
