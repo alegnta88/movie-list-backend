@@ -1,5 +1,4 @@
 import prisma from '../config/db.js';
-import { authenticateToken } from '../middlewares/authMiddleware.js';
 
 export const addToWatchlist = async (req, res) => {
     const { movieId, status, rating, notes } = req.body;
