@@ -17,8 +17,8 @@ export const addMovie = async (req, res) => {
     }
 
     try {
-        const userId = req.user.userId;
-const newMovie = await prismaClient.movie.create({
+    const userId = req.user.userId;
+    const newMovie = await prismaClient.movie.create({
     data: {
         title,
         overview,
@@ -31,7 +31,8 @@ const newMovie = await prismaClient.movie.create({
         }
     }
 });
-        res.status(201).json({ message: 'Movie added successfully', movie: newMovie });
+        
+    res.status(201).json({ message: 'Movie added successfully', movie: newMovie });
     } catch (error) {
         res.status(500).json({ error: 'Failed to add movie' });
     }   
