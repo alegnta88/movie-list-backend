@@ -4,6 +4,7 @@ export const addToWatchlist = async (req, res) => {
     const { movieId, status, rating, notes } = req.body;
 
     const userId = req.user.userId;
+
     if (!movieId) {
         return res.status(400).json({ error: 'movieId is required' });
     }
