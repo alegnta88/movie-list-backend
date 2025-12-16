@@ -18,6 +18,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/movies', movieRoutes);
 app.use('/api/watchlist', watchlistRoutes);
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the Movies Watchlist API');
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
