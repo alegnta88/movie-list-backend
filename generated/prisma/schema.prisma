@@ -9,14 +9,17 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
+  id         String    @id @default(uuid())
+  name       String
+  email      String    @unique
+  password   String
+  otp        String?
+  otpExpiry  DateTime?
+  isVerified Boolean   @default(false)
+  createdAt  DateTime  @default(now())
 
   movies          Movie[]
-  movieWatchlists MovieWatchlist[] // Add this line
+  movieWatchlists MovieWatchlist[]
 
   @@map("users")
 }

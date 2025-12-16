@@ -9,15 +9,18 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  
-  movies           Movie[]
-  movieWatchlists  MovieWatchlist[] 
-  
+  id         String    @id @default(uuid())
+  name       String
+  email      String    @unique
+  password   String
+  otp        String?
+  otpExpiry  DateTime?
+  isVerified Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+
+  movies          Movie[]
+  movieWatchlists MovieWatchlist[]
+
   @@map("users")
 }
 
@@ -31,31 +34,31 @@ model Movie {
   posterUrl   String?
   createdBy   String
   createdAt   DateTime @default(now())
-  
+
   user            User             @relation(fields: [createdBy], references: [id], onDelete: Cascade)
-  movieWatchlists MovieWatchlist[]  
-  
-  @@map("movies")
+  movieWatchlists MovieWatchlist[]
+
   @@index([createdBy])
+  @@map("movies")
 }
 
 model MovieWatchlist {
-  id        String   @id @default(uuid())
-  userId    String
-  movieId   String
-  status    WatchlistStatus @default(PLANNED)
-  addedAt   DateTime @default(now())
-  watched   Boolean  @default(false)
-  rating    Int?     
-  notes     String?
-  
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  movie     Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
-  
-  @@unique([userId, movieId]) 
-  @@map("movie_watchlist")
+  id      String          @id @default(uuid())
+  userId  String
+  movieId String
+  status  WatchlistStatus @default(PLANNED)
+  addedAt DateTime        @default(now())
+  watched Boolean         @default(false)
+  rating  Int?
+  notes   String?
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  movie Movie @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, movieId])
   @@index([userId])
   @@index([movieId])
+  @@map("movie_watchlist")
 }
 
 enum WatchlistStatus {
